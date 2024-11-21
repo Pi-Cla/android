@@ -60,7 +60,7 @@ class ChangelogsSettingsScreenViewModel @Inject constructor(
     var index by mutableStateOf<ChangelogIndex?>(null)
     var renderedChangelog by mutableStateOf("")
 
-    suspend fun requestChangelog(version: String) {
+    fun requestChangelog(version: String) {
         viewModelScope.launch {
             renderedChangelog = Changelogs(
                 context,
@@ -69,7 +69,7 @@ class ChangelogsSettingsScreenViewModel @Inject constructor(
         }
     }
 
-    suspend fun populate() {
+    fun populate() {
         viewModelScope.launch {
             index = Changelogs(context, kvStorage).fetchChangelogIndex()
         }

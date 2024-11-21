@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import chat.revolt.RevoltApplication
@@ -40,7 +38,6 @@ fun DefaultDestinationScreen(
             val activity = context.getComponentActivity() as Activity
             DynamicColors.applyToActivityIfAvailable(activity)
             DynamicColors.applyToActivitiesIfAvailable(RevoltApplication.instance)
-            activity.window.statusBarColor = Color.Transparent.toArgb()
 
             navController.popBackStack(navController.graph.startDestinationRoute!!, true)
             navController.navigate(it)

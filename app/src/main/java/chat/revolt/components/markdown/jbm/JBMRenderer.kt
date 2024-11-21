@@ -612,7 +612,7 @@ private fun annotateHighlights(
     source: String,
     highlights: List<CodeHighlight>
 ): AnnotatedString {
-    val highlightStyles = highlights.map {
+    val highlightStyles = highlights.mapNotNull {
         when (it) {
             is BoldHighlight -> AnnotatedString.Range(
                 SpanStyle(fontWeight = FontWeight.Bold),
@@ -630,7 +630,7 @@ private fun annotateHighlights(
 
             else -> null
         }
-    }.filterNotNull()
+    }
 
     return AnnotatedString(source, spanStyles = highlightStyles)
 }

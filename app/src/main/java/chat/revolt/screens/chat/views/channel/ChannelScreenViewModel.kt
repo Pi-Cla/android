@@ -2,6 +2,7 @@ package chat.revolt.screens.chat.views.channel
 
 import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -81,7 +82,7 @@ class ChannelScreenViewModel @Inject constructor(
     var draftContent by mutableStateOf("")
     var draftAttachments = mutableStateListOf<FileArgs>()
     var draftReplyTo = mutableStateListOf<SendMessageReply>()
-    var attachmentUploadProgress by mutableStateOf(0f)
+    var attachmentUploadProgress by mutableFloatStateOf(0f)
 
     var endOfChannel by mutableStateOf(false)
     var didInitialChannelFetch by mutableStateOf(false)
@@ -355,12 +356,18 @@ class ChannelScreenViewModel @Inject constructor(
                 attachments = listOf(),
                 replies = listOf(),
                 tail = items.firstOrNull()?.let {
-                    if (it is ChannelScreenItem.RegularMessage) {
-                        it.message.author == RevoltAPI.selfId
-                    } else if (it is ChannelScreenItem.ProspectiveMessage) {
-                        it.message.author == RevoltAPI.selfId
-                    } else {
-                        false
+                    when (it) {
+                        is ChannelScreenItem.RegularMessage -> {
+                            it.message.author == RevoltAPI.selfId
+                        }
+
+                        is ChannelScreenItem.ProspectiveMessage -> {
+                            it.message.author == RevoltAPI.selfId
+                        }
+
+                        else -> {
+                            false
+                        }
                     }
                 } ?: false
             )
@@ -498,7 +505,7 @@ class ChannelScreenViewModel @Inject constructor(
         ackChannel(channel?.id ?: return, messageId)
     }
 
-    suspend fun startListening(createUiCallbackListener: Boolean = true) {
+    fun startListening(createUiCallbackListener: Boolean = true) {
         viewModelScope.launch {
             withContext(RevoltAPI.realtimeContext) {
                 flow {

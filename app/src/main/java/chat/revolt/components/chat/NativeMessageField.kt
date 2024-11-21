@@ -260,8 +260,10 @@ fun NativeMessageField(
                                         size = SuggestionChipDefaults.IconSize,
                                     )
                                 },
-                                modifier = Modifier
-                                    .animateItemPlacement()
+                                modifier = Modifier.animateItem(
+                                    fadeInSpec = null,
+                                    fadeOutSpec = null
+                                )
                             )
                         }
 
@@ -284,8 +286,10 @@ fun NativeMessageField(
                                         )
                                     }
                                 },
-                                modifier = Modifier
-                                    .animateItemPlacement()
+                                modifier = Modifier.animateItem(
+                                    fadeInSpec = null,
+                                    fadeOutSpec = null
+                                )
                             )
                         }
 

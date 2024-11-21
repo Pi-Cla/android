@@ -7,7 +7,7 @@ import chat.revolt.BuildConfig
 import chat.revolt.R
 import chat.revolt.api.RevoltHttp
 import io.ktor.client.request.get
-import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readRawBytes
 import java.io.File
 
 class AttachmentProvider : FileProvider(R.xml.file_paths)
@@ -25,7 +25,7 @@ suspend fun getAttachmentContentUri(
 
     val response = RevoltHttp.get(resourceUrl)
     val file = File(attachmentsDir, "$id-$filename")
-    file.writeBytes(response.readBytes())
+    file.writeBytes(response.readRawBytes())
 
     return FileProvider.getUriForFile(
         context,

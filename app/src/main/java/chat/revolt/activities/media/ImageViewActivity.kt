@@ -51,7 +51,7 @@ import chat.revolt.api.settings.SyncedSettings
 import chat.revolt.providers.getAttachmentContentUri
 import chat.revolt.ui.theme.RevoltTheme
 import io.ktor.client.request.get
-import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readRawBytes
 import kotlinx.coroutines.launch
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.glide.ZoomableGlideImage
@@ -153,7 +153,7 @@ fun ImageViewScreen(resource: AutumnResource, onClose: () -> Unit = {}) {
                 )
             }?.let { uri ->
                 context.contentResolver.openOutputStream(uri).use { stream ->
-                    val image = RevoltHttp.get(resourceUrl).readBytes()
+                    val image = RevoltHttp.get(resourceUrl).readRawBytes()
                     stream?.write(image)
 
                     context.applicationContext.let {

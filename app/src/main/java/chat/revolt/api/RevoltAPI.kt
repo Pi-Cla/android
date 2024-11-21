@@ -186,7 +186,7 @@ object RevoltAPI {
         unreads.sync()
     }
 
-    suspend fun connectWS() {
+    fun connectWS() {
         socketCoroutine = CoroutineScope(Dispatchers.IO).launch {
             try {
                 withContext(realtimeContext) {
@@ -223,7 +223,7 @@ object RevoltAPI {
         }
     }
 
-    private suspend fun startSocketOps() {
+    private fun startSocketOps() {
         connectWS()
 
         // Send a ping every roughly 30 seconds else the socket dies

@@ -46,7 +46,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import chat.revolt.R
 import chat.revolt.api.RevoltHttp
 import io.ktor.client.request.get
-import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readRawBytes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -127,7 +127,7 @@ fun AudioPlayer(url: String, filename: String, contentType: String) {
                 )
             }?.let { uri ->
                 context.contentResolver.openOutputStream(uri).use { stream ->
-                    val audio = RevoltHttp.get(url).readBytes()
+                    val audio = RevoltHttp.get(url).readRawBytes()
                     stream?.write(audio)
 
                     context.applicationContext.let {

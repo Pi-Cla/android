@@ -21,7 +21,7 @@ object Autocomplete {
         val customResults =
             RevoltAPI.emojiCache.values.filter {
                 it.name?.contains(query, ignoreCase = true) ?: false
-            }.map {
+            }.mapNotNull {
                 if (it.name != null) {
                     AutocompleteSuggestion.Emoji(
                         ":${it.id}:",
@@ -32,7 +32,7 @@ object Autocomplete {
                 } else {
                     null
                 }
-            }.filterNotNull().distinctBy { it.custom?.id }
+            }.distinctBy { it.custom?.id }
 
         return (unicodeResults + customResults)
     }

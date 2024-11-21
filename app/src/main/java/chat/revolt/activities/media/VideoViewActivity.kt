@@ -24,7 +24,7 @@ import chat.revolt.providers.getAttachmentContentUri
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import io.ktor.client.request.get
-import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readRawBytes
 import kotlinx.coroutines.launch
 
 class VideoViewActivity : FragmentActivity() {
@@ -182,7 +182,7 @@ class VideoViewActivity : FragmentActivity() {
                 )
             }?.let { uri ->
                 this@VideoViewActivity.contentResolver.openOutputStream(uri).use { stream ->
-                    val video = RevoltHttp.get(resourceUrl).readBytes()
+                    val video = RevoltHttp.get(resourceUrl).readRawBytes()
                     stream?.write(video)
 
                     this@VideoViewActivity.applicationContext.let {
